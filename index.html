@@ -27,7 +27,58 @@
     <link rel="manifest" href="site.webmanifest">
 
     <style>
-        /* ========== OVERRIDE UTAMA: FULL WIDTH TANPA RUANG KOSONG ========== */
+        /* ========== HAPUS GARIS HITAM DI ATAS ABOUT ========== */
+        /* Menghilangkan border, outline, atau pseudo-element yang menyebabkan garis hitam */
+        .s-about {
+            border-top: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+
+        .s-about::before,
+        .s-about::after {
+            display: none !important;
+            content: none !important;
+        }
+
+        /* Menghilangkan garis dari geometric shape atau background */
+        .s-about__content-imgbg {
+            opacity: 0.15 !important;
+            /* mengurangi opacity agar tidak terlalu mencolok */
+        }
+
+        /* Memastikan tidak ada garis dari grid-section-split */
+        .grid-section-split {
+            border: none !important;
+            outline: none !important;
+        }
+
+        /* ========== PERBAIKAN: MENCEGAH ABOUT MENUTUPI FOTO INTRO ========== */
+        .s-intro {
+            overflow: visible !important;
+            position: relative !important;
+            z-index: 2 !important;
+        }
+
+        .s-about {
+            position: relative !important;
+            z-index: 1 !important;
+            margin-top: 0 !important;
+            clear: both !important;
+            border-top: none !important;
+        }
+
+        /* Spacer tambahan untuk desktop */
+        @media screen and (min-width: 901px) {
+            .s-about {
+                margin-top: var(--vspace-1) !important;
+                padding-top: var(--vspace-3) !important;
+            }
+        }
+
+        /* ========== OVERRIDE HANYA UNTUK KONTEN ========== */
+
+        /* Full width untuk konten utama */
         .row.width-sixteen-col,
         .s-content .row,
         .s-expertise__content .row {
@@ -38,6 +89,7 @@
             margin: 0 auto !important;
         }
 
+        /* Grid block full width */
         .grid-block,
         .grid-section-split {
             width: 100% !important;
@@ -54,7 +106,7 @@
             margin-top: 1.5rem;
         }
 
-        /* ========== FOTO/VIDEO: LEBIH KECIL & DI CENTER ========== */
+        /* ========== FOTO/VIDEO PROYEK: LEBIH KECIL & DI CENTER ========== */
         .project-media {
             width: 70% !important;
             max-width: 700px;
@@ -256,6 +308,7 @@
             }
         }
 
+        /* ========== INTRO SECTION ========== */
         .s-intro__content-inner {
             width: 100%;
             display: block;
@@ -270,6 +323,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            margin-bottom: 2rem;
         }
 
         .s-intro__content-media img {
@@ -277,10 +331,12 @@
             width: 100%;
         }
 
+        /* ========== ABOUT SECTION - HAPUS GARIS ========== */
         .s-about__content-main p {
             width: 100%;
         }
 
+        /* ========== CLIENTS SECTION ========== */
         .s-clients .grid-section-split__primary {
             width: 100% !important;
         }
@@ -291,6 +347,7 @@
             text-align: center;
         }
 
+        /* ========== KOLOM FULL WIDTH ========== */
         .column.xl-12 {
             width: 100% !important;
             padding: 0 !important;
@@ -298,6 +355,56 @@
 
         .s-expertise__content .column {
             padding: 0 !important;
+        }
+
+        /* ========== PERBAIKAN LOGO ========== */
+        .s-header__logo {
+            position: relative !important;
+            left: auto !important;
+            right: auto !important;
+            top: auto !important;
+            transform: translate(0.3rem, -0.2em) !important;
+        }
+
+        .s-header__logo a {
+            display: inline-block !important;
+            line-height: 1 !important;
+        }
+
+        .s-header__logo img {
+            width: auto !important;
+            max-width: 120px !important;
+            height: auto !important;
+            max-height: 60px !important;
+            object-fit: contain !important;
+            display: block !important;
+        }
+
+        .s-header__block {
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        @media screen and (max-width: 900px) {
+            .s-header__logo img {
+                max-width: 100px !important;
+                max-height: 50px !important;
+            }
+        }
+
+        /* ========== HAPUS GARIS HITAM LAINNYA ========== */
+        /* Menghilangkan kemungkinan garis dari template */
+        .s-about__content-imgbg {
+            opacity: 0.1 !important;
+        }
+
+        .grid-section-split__header {
+            border: none !important;
+        }
+
+        .s-about .grid-block,
+        .s-about .grid-section-split {
+            border: none !important;
         }
     </style>
 
@@ -507,14 +614,14 @@
                 <div class="row s-expertise__content width-sixteen-col">
                     <div class="column xl-12" style="width:100%; padding:0;">
 
-                        <!-- PROJECT 1 - FOTO (project1.jpeg) -->
+                        <!-- PROJECT 1 -->
                         <div style="width:100%; margin-bottom: 5rem;">
                             <div class="project-horizontal-title">
                                 <span class="project-number">01.</span>
                                 <span class="project-name">NFPS COMPRESSION COMP2</span>
                             </div>
                             <div class="project-media">
-                                <img src="images/projects/project1.jpeg" alt="NFPS Compression COMP2 project"
+                                <img src="images/projects/project1r.jpeg" alt="NFPS Compression COMP2 project"
                                     loading="lazy">
                             </div>
                             <div class="project-info-wrapper">
@@ -537,7 +644,7 @@
                             </div>
                         </div>
 
-                        <!-- PROJECT 2 - VIDEO (vid_project2.mp4) -->
+                        <!-- PROJECT 2 - VIDEO dengan CONTROLS -->
                         <div style="width:100%; margin-bottom: 5rem;">
                             <div class="project-horizontal-title">
                                 <span class="project-number">02.</span>
@@ -548,7 +655,6 @@
                                     <source src="images/projects/vid_project2.mp4" type="video/mp4">
                                     Browser Anda tidak mendukung tag video.
                                 </video>
-
                             </div>
                             <div class="project-info-wrapper">
                                 <div class="project-info-two-columns">
@@ -569,7 +675,7 @@
                             </div>
                         </div>
 
-                        <!-- PROJECT 3 - FOTO (project3r.jpeg) -->
+                        <!-- PROJECT 3 -->
                         <div style="width:100%; margin-bottom: 5rem;">
                             <div class="project-horizontal-title">
                                 <span class="project-number">03.</span>
@@ -593,12 +699,11 @@
                                 <p>The topside modules for Floating Production Storage and Offloading (FPSO) vessels in
                                     Ghana are critical processing plants mounted on the ship's deck. Historically
                                     fabricated in Asia, recent milestones have seen the first major modules manufactured
-                                    locally in Ghana at the Port of Takoradi - West Africa, marking a significant
-                                    achievement for local content development.</p>
+                                    locally in Ghana at the Port of Takoradi - West Africa.</p>
                             </div>
                         </div>
 
-                        <!-- PROJECT 4 - FOTO (project4r.jpeg) -->
+                        <!-- PROJECT 4 -->
                         <div style="width:100%; margin-bottom: 5rem;">
                             <div class="project-horizontal-title">
                                 <span class="project-number">04.</span>
@@ -620,14 +725,12 @@
                             </div>
                             <div class="project-description">
                                 <p>The Petrobras P-76 is a high-capacity Floating Production, Storage, and Offloading
-                                    (FPSO) unit operating in the Búzios field of the pre-salt Santos Basin. It was the
-                                    third platform to enter production in this giant field, starting operations on
-                                    February 20, 2019. The platform has the capacity to process up to 150,000 barrels of
-                                    oil per day and compress 6 million cubic meters of gas.</p>
+                                    (FPSO) unit operating in the Búzios field of the pre-salt Santos Basin. The platform
+                                    can process up to 150,000 barrels of oil per day.</p>
                             </div>
                         </div>
 
-                        <!-- PROJECT 5 - FOTO (project5r.jpeg) -->
+                        <!-- PROJECT 5 -->
                         <div style="width:100%; margin-bottom: 5rem;">
                             <div class="project-horizontal-title">
                                 <span class="project-number">05.</span>
@@ -648,15 +751,13 @@
                                 </div>
                             </div>
                             <div class="project-description">
-                                <p>The FPSO PTSC Lam Son is a floating production, storage, and offloading vessel
-                                    operating in the Thang Long – Dong Do oil fields offshore Vietnam. It has been in
-                                    service since June 2014 and is currently secured under a contract extension until
-                                    June 30, 2026. The vessel produces between 15,000 to 20,000 barrels of oil per day,
-                                    making it a significant contributor to Vietnam's offshore production.</p>
+                                <p>The FPSO PTSC Lam Son operates in the Thang Long – Dong Do oil fields offshore
+                                    Vietnam. It has been in service since June 2014 and produces between 15,000 to
+                                    20,000 barrels of oil per day.</p>
                             </div>
                         </div>
 
-                        <!-- PROJECT 6 - FOTO (project6.jpeg) -->
+                        <!-- PROJECT 6 -->
                         <div style="width:100%; margin-bottom: 5rem;">
                             <div class="project-horizontal-title">
                                 <span class="project-number">06.</span>
@@ -677,15 +778,13 @@
                                 </div>
                             </div>
                             <div class="project-description">
-                                <p>The NCP2 (North Compression Platform 2) and NMP3 (North Manifold Platform 3) are key
-                                    offshore structures that were part of the Tunu Phase 11 & 12 development for Total
-                                    E&P Indonesie. These major offshore oil and gas fabrication works were executed at
-                                    the PT. SMOE Indonesia yard in Batam, representing a significant milestone in
-                                    Indonesian offshore construction capabilities.</p>
+                                <p>The NCP2 (North Compression Platform 2) and NMP3 (North Manifold Platform 3) were
+                                    part of the Tunu Phase 11 & 12 development for Total E&P Indonesie, executed at PT.
+                                    SMOE Indonesia yard in Batam.</p>
                             </div>
                         </div>
 
-                        <!-- PROJECT 7 - FOTO (project7r.jpeg) -->
+                        <!-- PROJECT 7 -->
                         <div style="width:100%; margin-bottom: 2rem;">
                             <div class="project-horizontal-title">
                                 <span class="project-number">07.</span>
@@ -707,9 +806,8 @@
                             </div>
                             <div class="project-description">
                                 <p>The Seagood 101 FPSO is a Floating Production Storage and Offloading (FPSO) barge
-                                    primarily operating in the Oyong Oil and Gas Field in East Java, Indonesia. The
-                                    field is located in the Madura Strait and has been a important contributor to
-                                    Indonesia's domestic energy supply since its first production.</p>
+                                    primarily operating in the Oyong Oil and Gas Field in East Java, Indonesia, located
+                                    in the Madura Strait.</p>
                             </div>
                         </div>
 
